@@ -1,0 +1,222 @@
+1. What is vulnerability scanning?
+
+Vulnerability scanning is the automated process of inspecting systems, networks, or applications to identify known security weaknesses, misconfigurations, or missing patches.
+
+A vulnerability scanner (such as OpenVAS, Nessus, or Qualys) works by:
+
+Gathering information about the target (OS, open ports, services, software versions).
+
+Comparing this data against a database of known vulnerabilities (CVEs).
+
+Reporting any matches with severity ratings and recommended fixes.
+
+
+Key characteristics:
+
+Automated – runs with minimal human intervention.
+
+Signature-based – relies on a vulnerability database that is updated regularly.
+
+Non-intrusive (usually) – does not exploit vulnerabilities, only detects them.
+
+
+Example:
+Running OpenVAS on a Linux server to check for outdated Apache HTTP Server versions and weak SSL configurations.
+
+
+---
+
+2. Difference between vulnerability scanning and penetration testing
+
+Aspect	Vulnerability Scanning	Penetration Testing
+
+Goal	Find known vulnerabilities quickly.	Simulate real-world attacks to see if vulnerabilities can be exploited.
+Method	Automated tools with vulnerability databases.	Manual and automated exploitation techniques.
+Depth	Broad but shallow – lists possible issues.	Narrow but deep – proves impact of issues.
+Risk	Low – minimal system disruption.	Higher – may cause downtime or data corruption if exploits succeed.
+Expertise	Can be run by system admins or security analysts.	Requires ethical hackers / pentesters.
+Example Tool	OpenVAS, Nessus, Qualys.	Metasploit, Burp Suite, custom scripts.
+
+
+In short:
+Scanning is like a security health check — it tells you where problems might be.
+Pentesting is like a fire drill — it tests what happens if someone actively tries to break in.
+
+
+---
+
+3. What are some common vulnerabilities in personal computers?
+
+Common vulnerabilities in personal computers include:
+
+1. Unpatched software – outdated operating systems or applications that have known security flaws.
+
+
+2. Weak passwords – short, guessable, or reused passwords across accounts.
+
+
+3. Misconfigured services – leaving file sharing, remote desktop, or admin interfaces open to the internet without proper security.
+
+
+4. Malicious browser extensions – plugins with backdoors or spyware.
+
+
+5. Unsecured Wi-Fi connections – using public Wi-Fi without encryption or VPN.
+
+
+6. Lack of antivirus/antimalware – making the system more susceptible to infections.
+
+
+7. Phishing susceptibility – lack of email filtering or user awareness leading to malicious link clicks.
+
+
+8. Default credentials – factory-set usernames/passwords left unchanged.
+
+
+9. Privilege escalation flaws – software or OS misconfigurations that allow normal users to gain admin access.
+
+
+
+
+---
+
+4. How do scanners detect vulnerabilities?
+
+Vulnerability scanners detect vulnerabilities by combining information gathering and database matching:
+
+1. Port scanning – identifies open ports and running services (e.g., HTTP on port 80, SSH on port 22).
+
+
+2. Service fingerprinting – determines service versions (e.g., Apache 2.4.49).
+
+
+3. OS detection – identifies the operating system type and version.
+
+
+4. Configuration checks – examines SSL/TLS settings, HTTP headers, firewall rules.
+
+
+5. Database comparison – matches findings against known vulnerabilities in CVE/NVD or vendor advisories.
+
+
+6. Credentialed scans (optional) – logs into the system to check installed packages, configurations, and patch levels directly.
+
+
+7. Policy compliance checks – compares system settings to security benchmarks (like CIS or STIG).
+
+
+
+Example:
+If OpenVAS detects Apache 2.4.49 running, it will match it with CVE-2021-41773 (path traversal vulnerability) in its feed and report it.
+
+
+---
+
+5. What is CVSS?
+
+CVSS stands for Common Vulnerability Scoring System.
+It is a standardized framework for rating the severity of security vulnerabilities on a scale of 0.0 to 10.0.
+
+Base Score: Measures intrinsic characteristics (e.g., attack vector, complexity, required privileges).
+
+Temporal Score: Adjusts for changes over time (e.g., availability of exploit code or patches).
+
+Environmental Score: Adjusts based on the importance of the affected system to a specific organization.
+
+
+Severity categories:
+
+0.0 – None
+
+0.1–3.9 – Low
+
+4.0–6.9 – Medium
+
+7.0–8.9 – High
+
+9.0–10.0 – Critical
+
+
+Example:
+CVE-2021-41773 has a CVSS v3 score of 7.5 (High).
+
+
+---
+
+6. How often should vulnerability scans be performed?
+
+Best practices for scan frequency:
+
+Internal systems: Monthly or after major changes.
+
+External-facing systems: Weekly or at least bi-weekly.
+
+Critical infrastructure: Continuous scanning (daily or real-time monitoring).
+
+After incidents: Immediately after a security incident or breach.
+
+Regulatory compliance: Follow specific requirements (e.g., PCI DSS requires quarterly scans).
+
+
+Rule of thumb:
+Scan as often as your resources allow, especially after:
+
+Installing new software
+
+Changing configurations
+
+Applying major OS updates
+
+
+
+---
+
+7. What is a false positive in vulnerability scanning?
+
+A false positive is when a scanner reports a vulnerability that does not actually exist in the system.
+
+Causes:
+
+Outdated vulnerability database.
+
+Incorrect version detection by the scanner.
+
+Generic detection rules matching safe configurations.
+
+Changes already applied but scanner’s cache is outdated.
+
+
+Impact:
+
+Wastes time investigating non-issues.
+
+Can lead to distrust in scanning results.
+
+
+Example:
+Scanner flags Apache 2.4.49 vulnerability, but system is actually patched to 2.4.49-3 with the fix applied.
+
+
+---
+
+8. How do you prioritize vulnerabilities?
+
+Prioritizing vulnerabilities is important to fix the most dangerous ones first.
+Factors to consider:
+
+1. CVSS score – Start with Critical (9.0–10.0) and High (7.0–8.9) vulnerabilities.
+
+
+2. Exploit availability – Fix vulnerabilities with known public exploits first.
+
+
+3. Exposure – Prioritize vulnerabilities in internet-facing systems over internal-only ones.
+
+
+4. Business impact – Systems critical to operations take higher priority.
+
+
+5. Regulatory requirements – Fix issues that could cause compliance violations (e.g., PCI DSS, HIPAA).
+
+
+6. Chaining potential – Even medium vulnerabilities may be high priority if they can be combined with others to create a major exploit path.
